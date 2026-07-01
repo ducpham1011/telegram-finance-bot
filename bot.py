@@ -26,7 +26,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     help_text = (
         "<b>Danh sách lệnh:</b>\n"
         "/chart [mã] - <i>Xem biểu đồ (VD: /chart BTC, /chart FPT, /chart GOLD)</i>\n"
-        "/alert [mã] [> hoặc <] [giá] - <i>Đặt cảnh báo (VD: /alert BTC > 90000)</i>\n"
+        "/alert [mã] [&gt; hoặc &lt;] [giá] - <i>Đặt cảnh báo (VD: /alert BTC &gt; 90000)</i>\n"
         "/alerts - <i>Xem danh sách cảnh báo</i>\n"
         "/del_alert [id] - <i>Xóa cảnh báo</i>\n"
         "/sub_digest - <i>Đăng ký nhận bản tin ngày</i>\n"

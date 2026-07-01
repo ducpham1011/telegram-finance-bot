@@ -13,20 +13,20 @@ class ChartGenerator:
     @staticmethod
     def get_crypto_chart(symbol: str, interval: str = "1d", limit: int = 60) -> BytesIO:
         """
-        Generate candlestick chart for Crypto from Binance
-        interval can be: '1h', '4h', '1d', '1w'
+        Generate candlestick chart for Crypto using yfinance
+        interval can be: '1h', '1d', '1wk'
         """
-        url = f"https://api.binance.com/api/v3/klines?symbol={symbol.upper()}&interval={interval}&limit={limit}"
-        response = requests.get(url, timeout=5)
-        response.raise_for_status()
-        data = response.json()
-        
-        # Binance kline format: [Open time, Open, High, Low, Close, Volume, Close time, Quote asset volume, Number of trades, Taker buy base, Taker buy quote, Ignore]
-        df = pd.DataFrame(data, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume', 'close_time', 'quote_av', 'trades', 'tb_base_av', 'tb_quote_av', 'ignore'])
-        df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
-        df.set_index('timestamp', inplace=True)
-        df = df[['open', 'high', 'low', 'close', 'volume']].astype(float)
-        
+        if symbol.endswith("USDT"):
+            yf_symbol = symbol[:-4] + "-USD"
+        else:
+            yf_symbol = symbol + "-USD"
+            
+        ticker = yf.Ticker(yf_symbol)
+        df = ticker.history(period="3mo", interval=interval)
+        if df.empty:
+            raise ValueError(f"No data found for {symbol}.")
+            
+        df = df.tail(limit)
         return ChartGenerator._plot_candlestick(df, f"{symbol.upper()} Crypto ({interval})")
 
     @staticmethod

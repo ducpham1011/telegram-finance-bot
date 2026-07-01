@@ -11,15 +11,16 @@ class DataFetcher:
     @staticmethod
     def get_crypto_price(symbol: str) -> float:
         """
-        Fetch current price from Binance.
-        Symbol should be like 'BTCUSDT'
+        Fetch current price using yfinance instead of Binance to avoid IP blocks (Error 451).
         """
-        url = f"https://api.binance.com/api/v3/ticker/price?symbol={symbol.upper()}"
+        if symbol.endswith("USDT"):
+            yf_symbol = symbol[:-4] + "-USD"
+        else:
+            yf_symbol = symbol + "-USD"
+            
         try:
-            response = requests.get(url, timeout=5)
-            response.raise_for_status()
-            data = response.json()
-            return float(data.get("price", 0))
+            ticker = yf.Ticker(yf_symbol)
+            return float(ticker.fast_info.last_price)
         except Exception as e:
             logger.error(f"Error fetching crypto price for {symbol}: {e}")
             return 0.0
