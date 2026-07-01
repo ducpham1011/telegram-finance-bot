@@ -4,7 +4,7 @@ python-telegram-bot==21.0.1
 pymongo[srv]==4.6.2
 python-dotenv==1.0.1
 ccxt==4.2.66
-yfinance==0.2.37
+yfinance
 vnstock==0.2.9.2.3
 ipython
 mplfinance
