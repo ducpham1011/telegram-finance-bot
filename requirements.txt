@@ -1,0 +1,12 @@
+fastapi==0.110.0
+uvicorn==0.28.0
+python-telegram-bot==21.0.1
+pymongo[srv]==4.6.2
+python-dotenv==1.0.1
+ccxt==4.2.66
+yfinance==0.2.37
+vnstock
+mplfinance
+pandas
+requests==2.31.0
+beautifulsoup4==4.12.3
